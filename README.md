@@ -13,7 +13,13 @@ DB_PASSWORD=
 ```
 After this run `php artisan key:generate` to generate an app key in order to run the app.
 
-The products for this service are imported via a client FTP, which is accessed manually by running:
+The products for this service are imported via a client FTP, meaning that these environment variables need to be set:
+```shell script
+FTP_SERVER=
+FTP_USERNAME=
+FTP_PASSWORD=
+```
+This can then be accessed manually by running:
 ```shell script
 php artisan arkwright:product-upload
 ```
