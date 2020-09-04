@@ -4,6 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int    sku
+ * @property string plu
+ * @property string name
+ * @property string size
+ * @property string size_sort
+ */
 class Product extends Model
 {
     /**
