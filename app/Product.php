@@ -25,6 +25,20 @@ class Product extends Model
     ];
 
     /**
+     * @var string[]
+     */
+    const CLOTHING_SIZES = [
+        'XS',
+        'S',
+        'M',
+        'L',
+        'XL',
+        'XXL',
+        'XXXL',
+        'XXXXL',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var string[]

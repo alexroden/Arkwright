@@ -26,3 +26,35 @@ php artisan arkwright:product-upload
 Else, this command is scheduled to run at 8am every day.
 
 When this command is run, and the csv is not empty, a `_backup_` table is created of yesterday's products (in case of rollback), then the `products` table is truncated, and the new products are inserted into the table.
+
+In order to query this API you will need to set up a user. However, there is a test user within a seeder file, therefore you can query the API with this user by running `php artisan db:seed`.
+
+### Query API
+This API is protected by an authentication middleware, which checks for a valid `User-Token` set against a valid user, this token needs to be set in the header of any request.
+
+#### Requests
+**Route**
+
+`GET: /api/products`
+
+**Response**
+
+```json
+{
+    "code": 200,
+    "data": [
+        {
+            "PLU": "AAA",
+            "name": "Random product AAA.",
+            "sizes": [
+                {
+                    "SKU": 101,
+                    "size": "22"
+                },
+                ...
+            ]
+        },
+        ...  
+   ]
+}
+```
