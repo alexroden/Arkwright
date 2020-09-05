@@ -1,0 +1,23 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "PLU": "AAA",
+            "name": "Testing",
+            "sizes": [
+                {
+                    "SKU": 789,
+                    "size": "8 (Child)"
+                },
+                {
+                    "SKU": 123,
+                    "size": "1"
+                },
+                {
+                    "SKU": 456,
+                    "size": "5"
+                }
+            ]
+        }
+    ]
+}

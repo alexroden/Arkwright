@@ -6,6 +6,12 @@ use App\Concerns\HasToken;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property string token
+ * @property string first_name
+ * @property string last_name
+ * @property string email
+ */
 class User extends Authenticatable
 {
     use Notifiable;

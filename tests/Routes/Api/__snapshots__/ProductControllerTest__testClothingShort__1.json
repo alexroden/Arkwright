@@ -1,0 +1,23 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "PLU": "AAA",
+            "name": "Testing",
+            "sizes": [
+                {
+                    "SKU": 456,
+                    "size": "M"
+                },
+                {
+                    "SKU": 789,
+                    "size": "L"
+                },
+                {
+                    "SKU": 123,
+                    "size": "XXL"
+                }
+            ]
+        }
+    ]
+}

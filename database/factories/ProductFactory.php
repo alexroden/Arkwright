@@ -2,10 +2,9 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\User;
+use App\Product;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
-use Ramsey\Uuid\Uuid;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +17,12 @@ use Ramsey\Uuid\Uuid;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(Product::class, function (Faker $faker) {
     return [
-        'token'      => (string) Uuid::uuid4(),
-        'first_name' => $faker->firstName,
-        'last_name'  => $faker->lastName,
-        'email'      => $faker->email,
+        'sku'       => '123',
+        'plu'       => 'AAA',
+        'name'      => 'Testing',
+        'size'      => '1',
+        'size_sort' => 'SHOE_UK',
     ];
 });
