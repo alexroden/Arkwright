@@ -1,0 +1,6 @@
+100, AAA, "Random product AAA.", "28", SHOE_EU
+101, AAA, "Random product AAA.", "22", SHOE_EU
+112, AAC, "Random product AAC.", "XXL", CLOTHING_SHORT
+113, AAC, "Random product AAC.", "XXXXL", CLOTHING_SHORT
+125, AAE, "Random product AAE.", "11 (Child)", SHOE_UK
+126, AAE, "Random product AAE.", "1 ", SHOE_UK

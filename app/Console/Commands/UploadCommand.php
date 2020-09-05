@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Product;
+use App\Util\Environment;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
@@ -16,6 +17,11 @@ class UploadCommand extends Command
      * @var string
      */
     const FILE = 'products.csv';
+
+    /**
+     * @var string
+     */
+    const TEST_FILE = 'test.csv';
 
     /**
      * The name and signature of the console command.
@@ -33,39 +39,44 @@ class UploadCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): void
     {
-        $connection = ftp_connect(Config::get('credentials.server'));
+        if (!Environment::isTest()) {
+            $connection = ftp_connect(Config::get('credentials.server'));
 
-        $login = ftp_login(
-            $connection,
-            Config::get('credentials.username'),
-            Config::get('credentials.password')
-        );
+            $login = ftp_login(
+                $connection,
+                Config::get('credentials.username'),
+                Config::get('credentials.password')
+            );
 
-        if (!$connection || !$login) {
-            $this->error('Connection Error!');
+            if (!$connection || !$login) {
+                $this->error('Connection Error!');
 
-            return;
+                return;
+            }
+
+            if (!Storage::exists(self::FILE)) {
+                Storage::put(self::FILE, '');
+            }
+
+            ftp_get(
+              $connection,
+              storage_path('app').'/'.self::FILE,
+              self::FILE,
+              FTP_ASCII
+            );
         }
 
-        if (!Storage::exists(self::FILE)) {
-            Storage::put(self::FILE, '');
+        $path = storage_path('app').'/'.self::FILE;
+        if (Environment::isTest()) {
+            $path = storage_path('app').'/'.self::TEST_FILE;
         }
-
-        ftp_get(
-          $connection,
-          storage_path('app').'/'.self::FILE,
-          self::FILE,
-          FTP_ASCII
-        );
 
         $rows = [];
         $resource = fopen(
-            storage_path('app').'/'.self::FILE,
+            $path,
             'r'
         );
         while (!feof($resource)) {
@@ -93,12 +104,14 @@ class UploadCommand extends Command
         });
 
         if (!empty($rows)) {
-            if (Schema::hasTable("products_backup_{$now->copy()->subDays(2)->format('Y_m_d')}")) {
-                DB::table("products_backup_{$now->copy()->subDays(2)->format('Y_m_d')}")->delete();
-            }
+            if (!Environment::isTest()) {
+                if (Schema::hasTable("products_backup_{$now->copy()->subDays(2)->format('Y_m_d')}")) {
+                    DB::table("products_backup_{$now->copy()->subDays(2)->format('Y_m_d')}")->delete();
+                }
 
-            DB::statement("CREATE TABLE products_backup_{$now->copy()->subDay()->format('Y_m_d')} LIKE products");
-            DB::statement("INSERT products_backup_{$now->copy()->subDay()->format('Y_m_d')} SELECT * FROM products");
+                DB::statement("CREATE TABLE products_backup_{$now->copy()->subDay()->format('Y_m_d')} LIKE products");
+                DB::statement("INSERT products_backup_{$now->copy()->subDay()->format('Y_m_d')} SELECT * FROM products");
+            }
 
             Product::truncate();
             DB::table('products')
