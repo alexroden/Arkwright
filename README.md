@@ -60,5 +60,5 @@ This API is protected by an authentication middleware, which checks for a valid 
 ```
 
 ### Tests
-This project contains API route tests, which assert against snapshots. 
+This project contains API route tests, which assert against snapshots, and command tests, which assert database insertion. 
 These are run through phpunit, therefore to run these tests run the command `phpunit` in your terminal.
