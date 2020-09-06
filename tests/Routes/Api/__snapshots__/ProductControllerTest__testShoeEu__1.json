@@ -6,16 +6,16 @@
             "name": "Testing",
             "sizes": [
                 {
-                    "SKU": 456,
-                    "size": "38"
+                    "SKU": "456",
+                    "size": 38
                 },
                 {
-                    "SKU": 123,
-                    "size": "40"
+                    "SKU": "123",
+                    "size": 40
                 },
                 {
-                    "SKU": 789,
-                    "size": "45"
+                    "SKU": "789",
+                    "size": 45
                 }
             ]
         }

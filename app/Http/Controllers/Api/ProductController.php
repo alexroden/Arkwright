@@ -37,7 +37,7 @@ class ProductController extends Controller
             $sizes = $items->map(function (stdClass $product) {
                 return [
                     'SKU'  => $product->sku,
-                    'size' => $product->size
+                    'size' => is_numeric($product->size) ? (float) $product->size : $product->size,
                 ];
             })->sortBy(function (array $product) use ($sizeSort) {
                 switch ($sizeSort) {
