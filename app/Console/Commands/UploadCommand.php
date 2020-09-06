@@ -105,10 +105,9 @@ class UploadCommand extends Command
 
         if (!empty($rows)) {
             if (!Environment::isTest()) {
-                if (Schema::hasTable("products_backup_{$now->copy()->subDays(2)->format('Y_m_d')}")) {
-                    DB::table("products_backup_{$now->copy()->subDays(2)->format('Y_m_d')}")->delete();
-                }
+                Schema::dropIfExists("products_backup_{$now->copy()->subDays(2)->format('Y_m_d')}");
 
+                Schema::dropIfExists("products_backup_{$now->copy()->subDay()->format('Y_m_d')}");
                 DB::statement("CREATE TABLE products_backup_{$now->copy()->subDay()->format('Y_m_d')} LIKE products");
                 DB::statement("INSERT products_backup_{$now->copy()->subDay()->format('Y_m_d')} SELECT * FROM products");
             }
