@@ -37,6 +37,13 @@ This API is protected by an authentication middleware, which checks for a valid 
 
 `GET: /api/products`
 
+**Parameters**
+You can query this endpoint based on PLU code:
+
+| Param | Value |
+| ----------- | ----------- |
+| `plu` | `string` |
+
 **Response**
 
 ```json
@@ -49,7 +56,7 @@ This API is protected by an authentication middleware, which checks for a valid 
             "sizes": [
                 {
                     "SKU": 101,
-                    "size": "22"
+                    "size": 22
                 },
                 ...
             ]
