@@ -7,6 +7,8 @@ use App\Http\Requests\FilterRequest;
 use App\Product;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class ProductController extends Controller
 {
@@ -17,14 +19,22 @@ class ProductController extends Controller
      */
     public function __invoke(FilterRequest $request)
     {
-        $products = Product::all()->groupBy('plu')->map(function (Collection $items) {
+        $query = $request->validated();
+
+        $products = DB::table('products');
+
+        foreach ($query as $key => $value) {
+            $products->where($key, '=', $value);
+        }
+
+        $products = $products->get()->groupBy('plu')->map(function (Collection $items) {
             /** @var \App\Product $item */
             $item = $items->first();
             $plu = $item->plu;
             $name = $item->name;
             $sizeSort = $item->size_sort;
 
-            $sizes = $items->map(function (Product $product) {
+            $sizes = $items->map(function (stdClass $product) {
                 return [
                     'SKU'  => $product->sku,
                     'size' => $product->size

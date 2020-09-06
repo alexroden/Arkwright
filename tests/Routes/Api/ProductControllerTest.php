@@ -103,4 +103,35 @@ class ProductControllerTest extends AbstractRouteTestCase
         $response->assertOk();
         $this->assertMatchesJsonSnapshot($response->getContent());
     }
+
+    public function testFilter()
+    {
+        $user = factory(User::class)->create();
+        factory(Product::class)->create([
+            'sku'       => '123',
+            'plu'       => 'AAA',
+            'name'      => 'Testing',
+            'size'      => '40',
+            'size_sort' => 'SHOE_EU',
+        ]);
+        factory(Product::class)->create([
+            'sku'       => '456',
+            'plu'       => 'AAA',
+            'name'      => 'Testing',
+            'size'      => '38',
+            'size_sort' => 'SHOE_EU',
+        ]);
+        factory(Product::class)->create([
+            'sku'       => '789',
+            'plu'       => 'ABC',
+            'name'      => 'Testing',
+            'size'      => '45',
+            'size_sort' => 'SHOE_EU',
+        ]);
+
+        $response = $this->json('GET', '/api/products', ['plu' => 'AAA'] , ['User-Token' => $user->token]);
+
+        $response->assertOk();
+        $this->assertMatchesJsonSnapshot($response->getContent());
+    }
 }
