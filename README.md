@@ -38,6 +38,7 @@ This API is protected by an authentication middleware, which checks for a valid 
 `GET: /api/products`
 
 **Parameters**
+
 You can query this endpoint based on PLU code:
 
 | Param | Value |
